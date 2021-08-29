@@ -17,7 +17,7 @@ let registro ={
      let imputCPF=document.querySelector('#inputCpf');
      let imputCategoria=document.querySelector('#inputCategoria');
      let inputEmail=document.querySelector('#inputEmail');
-     let inputPassword=document.querySelector('#inputPassword');
+     let website=document.querySelector("#website");
      let inputEnderecoCEP=document.querySelector('#inputEnderecoCep');
      let inputTelefone=document.querySelector('#inputTelefone');
      
@@ -25,7 +25,7 @@ let registro ={
      let capturaCPF=imputCPF.value;
      let capturaCategoria=imputCategoria.value;
      let capturaEmail=inputEmail.value;
-     let capturaPassword=inputPassword.value;
+    
      let capturaEnderecoCEP=inputEnderecoCEP.value;
      let capturaTelefone=inputTelefone.value;
 
@@ -34,7 +34,7 @@ let registro ={
         cpf:capturaCPF,
         categoria:capturaCategoria,
         email: capturaEmail,
-        password:capturaPassword,
+        website:website.value,
         enderecoCep:capturaEnderecoCEP,
         telefone:capturaTelefone
      };
@@ -45,10 +45,11 @@ let registro ={
      imputCPF.value='';
      imputCategoria.value='';
      inputEmail.value='';
-     inputPassword.value='';
+     website.value='';
      inputEnderecoCEP.value='';
      inputTelefone.value='';
       
+    inserir();
     
     for(let registro of registros){
     console.log('Nome: '+registro.nome+ ' Idade: '+registro.cpf);
@@ -61,7 +62,7 @@ function agregarRegistroEmpresa(){
     let imputCnpj=document.querySelector('#inputCnpj');
     let imputCategoria=document.querySelector('#inputCategoria');
     let inputEmail=document.querySelector('#inputEmail');
-    let inputPassword=document.querySelector('#inputPassword');
+    
     let inputEnderecoCEP=document.querySelector('#inputEnderecoCep');
     let inputTelefone=document.querySelector('#inputTelefone');
     
@@ -69,18 +70,18 @@ function agregarRegistroEmpresa(){
     let capturaCnpj=imputCnpj.value;
     let capturaCategoria=imputCategoria.value;
     let capturaEmail=inputEmail.value;
-    let capturaPassword=inputPassword.value;
+   
     let capturaEnderecoCEP=inputEnderecoCEP.value;
     let capturaTelefone=inputTelefone.value;
 
        registro ={
-       nome:capturaNome,
-       cnpj:capturaCnpj,
-       categoria:capturaCategoria,
-       email: capturaEmail,
-       password:capturaPassword,
-       enderecoCep:capturaEnderecoCEP,
-       telefone:capturaTelefone
+       "nome":capturaNome,
+       "cnpj":capturaCnpj,
+       "categoria":capturaCategoria,
+       "email": capturaEmail,
+       "website":website.value,
+       "enderecoCep":capturaEnderecoCEP,
+       "telefone":capturaTelefone
     }
     
     registros.push(registro);
@@ -89,14 +90,17 @@ function agregarRegistroEmpresa(){
     imputCnpj.value='';
     imputCategoria.value='';
     inputEmail.value='';
-    inputPassword.value='';
+    website.value='';
     inputEnderecoCEP.value='';
     inputTelefone.value='';
      
    for(let registro of registros){
    console.log('Nome: '+registro.nome+ ' CNPJ: '+registro.cnpj);
    }
+   
+   inserir();
 }
+
 if(document.URL.includes("Empreca")){
     document.querySelector('#buton1').addEventListener('click', agregarRegistroEmpresa);
 }else{
@@ -104,3 +108,39 @@ if(document.URL.includes("Empreca")){
 }
 
 
+function inserir(){
+    
+    let _data = registro;
+
+      
+      fetch('http://localhost:3000/prestadores/', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => response.json()) 
+      .then(json => console.log(json))
+      .catch(err => console.log(err));
+    
+    console.log("inserido");
+    alert("inserido");
+
+}
+/* function obtener(){
+    let inputNome= document.querySelector('#nome');
+    let inputCpf=document.querySelector('#inputCpf');
+    let inputCategoria=document.querySelector('#inputCategoria');
+    let inputEmail=document.querySelector('#inputEmail');
+    let inputEnderecoCEP=document.querySelector('#inputEnderecoCep');
+    let inputTelefone=document.querySelector('#inputTelefone');
+
+    let  ={
+        nome:capturaNome,
+        cnpj:capturaCnpj,
+        categoria:capturaCategoria,
+        email: capturaEmail,
+        password:capturaPassword,
+        enderecoCep:capturaEnderecoCEP,
+        telefone:capturaTelefone
+     }
+} */

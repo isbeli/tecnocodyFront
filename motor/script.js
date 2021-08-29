@@ -27,7 +27,7 @@ function listar(){
 		}
 		let tabelaResult=document.getElementById("tabelaResult");
 		mostrarTabela(posiblesPrestadores,tabelaResult);
-		
+		inserirPresencia(posiblesPrestadores);
 		
 	},1500);
 	
@@ -52,7 +52,7 @@ function mostrarTabela(lista,elementDom){
                 listado.innerHTML+= `<tr>
                                         <td>${lista[i].titulo}</td>
                                         <td>${lista[i].url}</td>
-                                        <td><button class="btn btn-danger" type="button">accion</button></td>
+                                        <td><button class="btn btn-danger" type="button">eliminar url</button><button class="btn btn-success" type="button">verificar</button></td>
                                     </tr>`;
     }
 	
@@ -61,3 +61,20 @@ function mostrarTabela(lista,elementDom){
             
 
 
+function inserirPresencia(objeto){
+    
+    let _data =objeto;
+
+      
+      fetch('http://localhost:3000/presencias/', {
+        method: "POST",
+        body: JSON.stringify(_data),
+        headers: {"Content-type": "application/json; charset=UTF-8"}
+      })
+      .then(response => response.json()) 
+      .then(json => console.log(json))
+      .catch(err => console.log(err));
+    
+    console.log("inserido");
+
+}
